@@ -2,9 +2,9 @@
 
 namespace Lokalkoder\Entree;
 
+use Lokalkoder\Entree\Commands\EntreeCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Lokalkoder\Entree\Commands\EntreeCommand;
 
 class EntreeServiceProvider extends PackageServiceProvider
 {
