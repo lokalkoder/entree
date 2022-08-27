@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Lokalkoder\Entree\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class EntreeCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'entree';
 
     public $description = 'My command';
 
