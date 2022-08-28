@@ -2,7 +2,9 @@
 
 namespace Lokalkoder\Entree\Services;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route;
 use Joesama\Pintu\Services\ComponentServices;
 use Lokalkoder\Entree\Services\Concerns\NeedRolesAndPermissions;
 
@@ -10,37 +12,27 @@ class NavigationServices
 {
     use NeedRolesAndPermissions;
 
-    public Collection $menu;
+    protected Collection $permission;
 
     public function __construct()
     {
-        $permission = self::getAuthorizeGroupAccess();
-
-        $this->menu = ($this->getComponentCollection())->transform(function ($submodule, $module) use ($permission) {
-            if (! $permission->has($module)) {
-                return null;
-            }
-
-            $format = self::format($module, [], $module);
-
-            $format['sub_menus'] = collect($submodule)->transform(function ($sub, $dir) use ($module, $permission) {
-                return in_array($dir, $permission->get($module)) ? self::format($module.'.'.$dir, $sub) : null;
-            })->filter(function ($menu) {
-                return $menu !== null;
-            });
-
-            return $format;
-        })->filter(function ($menu) {
-            return $menu !== null;
-        });
+        $this->permission = self::getAuthorizeGroupAccess();
     }
 
     /**
      * @return Collection
      */
-    public static function flat(): Collection
+    public function menu(): Collection
     {
-        return collect(self::component())->flatMap(function ($menu) {
+        return $this->getMenuComponent($this->permission);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function flat(): Collection
+    {
+        return $this->menu()->flatMap(function ($menu) {
             return $menu['sub_menus'];
         });
     }
@@ -61,12 +53,12 @@ class NavigationServices
 
         $class = ($isModule) ? null : 'nav-link-text';
 
-        $isTitle = ($isModule) ? true : false;
+        $isTitle = (bool) $isModule;
 
         return [
             'icon' => $icon,
             'route' => $route,
-            'url' => ($isModule) ? '/' : route($route),
+            'url' => ($isModule) ? '/' : (Route::has($route) ? route($route) : null),
             'label' => $label,
             'tags' => str_replace('.', ',', $item),
             'class' => $class,
@@ -81,5 +73,40 @@ class NavigationServices
     protected function getComponentCollection(): Collection
     {
         return (new ComponentServices('App\Providers\RouteServiceProvider'))->toCollection();
+    }
+
+    /**
+     * @param $permission
+     * @return Collection
+     */
+    protected function getMenuComponent($permission): Collection
+    {
+        return $this->getComponentCollection()->transform(function ($submodule, $module) use ($permission) {
+            if (config('entree.enable_permission') && ! $permission->has($module)) {
+                return null;
+            }
+
+            $format = self::format($module, [], $module);
+
+            $submodule = collect($submodule);
+
+            if (($index = $submodule->get('index')) && $submodule->count() == 1) {
+                $format = self::format($module.'.index', $index);
+            } else {
+                $format['sub_menus'] = $submodule->transform(function ($sub, $dir) use ($module, $permission) {
+                    if (config('entree.enable_permission')) {
+                        return in_array($dir, $permission->get($module)) ? self::format($module.'.'.$dir, $sub) : null;
+                    }
+
+                    return self::format($module.'.'.$dir, $sub);
+                })->filter(function ($menu) {
+                    return $menu !== null;
+                });
+            }
+
+            return $format;
+        })->filter(function ($menu) {
+            return $menu !== null;
+        });
     }
 }
