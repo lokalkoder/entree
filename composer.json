@@ -19,9 +19,11 @@
         "php": "^8.1",
         "spatie/laravel-package-tools": "^1.9.2",
         "illuminate/contracts": "^9.0",
+        "spatie/laravel-permission": "^5.5",
         "orchestra/memory": "master"
     },
     "require-dev": {
+        "laravel/breeze": "^1.11",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^6.0",
         "nunomaduro/larastan": "^2.0.1",
@@ -51,6 +53,8 @@
         "format": "vendor/bin/pint"
     },
     "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
         "sort-packages": true
     },
     "extra": {
