@@ -1,0 +1,9 @@
+    /**
+     * {{ title }}
+     * @param Request $request
+     * @return \Inertia\Response
+     */
+    public function get{{ name }}(Request $request)
+    {
+        return Inertia::render({{ page }});
+    }

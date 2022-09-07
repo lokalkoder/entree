@@ -2,7 +2,9 @@
 
 namespace Lokalkoder\Entree;
 
+use Lokalkoder\Entree\Commands\CreateComponentPage;
 use Lokalkoder\Entree\Commands\EntreeCommand;
+use Lokalkoder\Entree\Commands\EntreeInstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -20,6 +22,9 @@ class EntreeServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasMigration('create_entree_table')
-            ->hasCommand(EntreeCommand::class);
+            ->hasCommands([
+                EntreeInstallCommand::class,
+                CreateComponentPage::class
+            ]);
     }
 }

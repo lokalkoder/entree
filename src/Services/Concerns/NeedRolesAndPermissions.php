@@ -2,7 +2,7 @@
 
 namespace Lokalkoder\Entree\Services\Concerns;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 trait NeedRolesAndPermissions
