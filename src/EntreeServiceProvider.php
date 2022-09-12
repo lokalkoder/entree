@@ -18,9 +18,6 @@ class EntreeServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('entree')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_entree_table')
             ->hasCommands([
                 EntreeInstallCommand::class,
                 CreateComponentPage::class,
