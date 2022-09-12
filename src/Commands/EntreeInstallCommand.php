@@ -29,7 +29,7 @@ class EntreeInstallCommand extends InstallCommand
      */
     public function handle()
     {
-        $this->call('breeze:install', [ 'stack' => 'vue']);
+        $this->call('breeze:install', ['stack' => 'vue']);
 
         $this->installMiddlewareAfter('HandleInertiaRequests::class', '\App\Http\Middleware\EntreeRequests::class');
 

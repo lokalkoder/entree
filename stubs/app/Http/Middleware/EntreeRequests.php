@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Lokalkoder\Entree\Services\NavigationServices;
-use Tightenco\Ziggy\Ziggy;
 
 class EntreeRequests extends Middleware
 {
@@ -39,12 +38,12 @@ class EntreeRequests extends Middleware
             'menu' => function () {
                 return (new NavigationServices())->menu();
             },
-            'info' => function() {
+            'info' => function () {
                 return [
                     'name' => config('app.name'),
-                    'release' => now()->year
+                    'release' => now()->year,
                 ];
-            }
+            },
         ]);
     }
 }
