@@ -29,13 +29,14 @@ class CreateComponentPage extends GeneratorCommand
      * Execute the console command.
      *
      * @return bool|null
+     *
      * @throws FileNotFoundException
      */
     public function handle(): ?bool
     {
-        $component = data_get($this->getComponentCollection(), $this->getControllerInput() .'.'. $this->getMethodInput() . '.named');
+        $component = data_get($this->getComponentCollection(), $this->getControllerInput().'.'.$this->getMethodInput().'.named');
 
-        collect($component)->each(function ($page){
+        collect($component)->each(function ($page) {
             $continue = true;
 
             $path = $this->getPath($page);
@@ -64,14 +65,14 @@ class CreateComponentPage extends GeneratorCommand
     protected function getPath($name): string
     {
         return $this->laravel->resourcePath(
-            'js/Pages/' . $this->qualifyClass($this->getControllerInput()) .
-            '/'. $this->qualifyClass($this->getMethodInput())  .
-            '/'. $this->qualifyClass($name) . '.vue');
+            'js/Pages/'.$this->qualifyClass($this->getControllerInput()).
+            '/'.$this->qualifyClass($this->getMethodInput()).
+            '/'.$this->qualifyClass($name).'.vue');
     }
-
 
     /**
      * Check file exist.
+     *
      * @param $name
      * @return bool
      */
@@ -82,6 +83,7 @@ class CreateComponentPage extends GeneratorCommand
 
     /**
      * Backup replication.
+     *
      * @param $path
      * @return void
      */
@@ -89,7 +91,7 @@ class CreateComponentPage extends GeneratorCommand
     {
         $basename = basename($path);
 
-        $destination = str_replace($basename, now()->format('dmY') .'/'. $basename, $path);
+        $destination = str_replace($basename, now()->format('dmY').'/'.$basename, $path);
 
         $this->makeDirectory($destination);
 
@@ -117,7 +119,7 @@ class CreateComponentPage extends GeneratorCommand
         $title = str_replace(['.'], [' '], $title);
 
         return str_replace(
-            ["{{ title }}", "{{ name }}"],
+            ['{{ title }}', '{{ name }}'],
             [Str::title($title), $this->qualifyClass($title)],
             $stub
         );
@@ -137,15 +139,16 @@ class CreateComponentPage extends GeneratorCommand
      */
     protected function resolveStubPath($stub): ?string
     {
-        $stub = '/stubs' . $stub;
+        $stub = '/stubs'.$stub;
 
-        return file_exists($stubPath = dirname(__DIR__, 2) . $stub)
+        return file_exists($stubPath = dirname(__DIR__, 2).$stub)
             ? $stubPath
             : null;
     }
 
     /**
      * Component collection.
+     *
      * @return Collection
      */
     protected function getComponentCollection(): Collection
@@ -155,6 +158,7 @@ class CreateComponentPage extends GeneratorCommand
 
     /**
      * Controller input.
+     *
      * @return string
      */
     protected function getControllerInput(): string
@@ -164,6 +168,7 @@ class CreateComponentPage extends GeneratorCommand
 
     /**
      * Method input.
+     *
      * @return string
      */
     protected function getMethodInput(): string
