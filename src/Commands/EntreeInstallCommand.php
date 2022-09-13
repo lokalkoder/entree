@@ -51,8 +51,8 @@ class EntreeInstallCommand extends InstallCommand
     {
         $this->updateNodePackages(function ($packages) {
             return [
-                    '@fortawesome/fontawesome-free' => '^6.2.0',
-                ] + $packages;
+                '@fortawesome/fontawesome-free' => '^6.2.0',
+            ] + $packages;
         });
 
         $this->runCommands(['npm run build']);
@@ -66,8 +66,8 @@ class EntreeInstallCommand extends InstallCommand
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Entree'));
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages'));
 
-        (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/js/Entree', resource_path('js/Entree'));
-        (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/js/Pages', resource_path('js/Pages'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js/Entree', resource_path('js/Entree'));
+        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js/Pages', resource_path('js/Pages'));
 
         $this->replaceInFile('Welcome', 'Entree', base_path('routes/web.php'));
     }
@@ -79,6 +79,6 @@ class EntreeInstallCommand extends InstallCommand
     {
         $this->installMiddlewareAfter('HandleInertiaRequests::class', '\App\Http\Middleware\EntreeRequests::class');
 
-        copy(__DIR__ . '/../../stubs/app/Http/Middleware/EntreeRequests.php', app_path('Http/Middleware/EntreeRequests.php'));
+        copy(__DIR__.'/../../stubs/app/Http/Middleware/EntreeRequests.php', app_path('Http/Middleware/EntreeRequests.php'));
     }
 }
