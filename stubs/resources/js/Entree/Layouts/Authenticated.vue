@@ -19,7 +19,7 @@ defineProps({
             <!-- Page Heading -->
             <ApplicationHeader>
                 <template #header>
-                    {{ title }}
+                        {{ title }}
                 </template>
             </ApplicationHeader>
 

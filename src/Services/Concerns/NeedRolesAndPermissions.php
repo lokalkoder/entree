@@ -2,6 +2,7 @@
 
 namespace Lokalkoder\Entree\Services\Concerns;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
