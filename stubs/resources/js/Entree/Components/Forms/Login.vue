@@ -4,7 +4,7 @@ import BreezeCheckbox from '@/Components/Checkbox.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeInputError from '@/Components/InputError.vue';
 import BreezeLabel from '@/Components/Label.vue';
-import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
+import { Link, useForm } from '@inertiajs/inertia-vue3';
 
 defineProps({
     canResetPassword: Boolean,

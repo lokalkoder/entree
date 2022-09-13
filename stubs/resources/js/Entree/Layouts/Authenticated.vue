@@ -2,7 +2,9 @@
 import ApplicationNav from '@/Entree/Layouts/Navigation.vue';
 import ApplicationHeader from '@/Entree/Layouts/Header.vue';
 import ApplicationFooter from '@/Entree/Layouts/Footer.vue';
+import MessageBox from "@/Entree/Components/Forms/MessageBox.vue";
 import { Head } from '@inertiajs/inertia-vue3';
+import AlertBox from "@/Entree/Components/Forms/AlertBox.vue";
 
 defineProps({
     title: String,
@@ -26,6 +28,8 @@ defineProps({
             <!-- Page Content -->
             <main>
                 <slot />
+                <message-box />
+                <alert-box />
             </main>
         </div>
         <ApplicationFooter/>

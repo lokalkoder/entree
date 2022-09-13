@@ -1,5 +1,5 @@
 <script setup>
-import {computed, reactive, ref, watch} from 'vue';
+import {ref} from 'vue';
 import Logo from '@/Entree/Components/Logo.vue';
 import BreezeDropdown from '@/Components/Dropdown.vue';
 import BreezeDropdownLink from '@/Components/DropdownLink.vue';
@@ -61,25 +61,25 @@ const showingNavigationDropdown = ref(false);
                         <theme-switcher />
                         <BreezeDropdown class="flex-1" align="right" width="48">
                             <template #trigger>
-                                <span class="inline-flex rounded-md">
-                                    <button type="button"
-                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                                        {{ $page.props.auth.user.name }}
-
-                                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                             viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                  clip-rule="evenodd"/>
-                                        </svg>
-                                    </button>
+                                <span class="inline-flex rounded-md gap-2 cursor-pointer active:cursor-pointer">
+                                    <img v-if="$page.props.auth.user.avatar" class="p-1 w-10 h-10 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" :src="$page.props.auth.user.avatar"  alt="Bordered avatar"/>
+                                    <div v-else class="inline-flex overflow-hidden relative justify-center items-center w-10 h-10 bg-gray-100 rounded-full dark:bg-gray-600">
+                                        <span class="font-medium text-gray-600 dark:text-gray-300">J</span>
+                                    </div>
+                                    <span class="sr-only"> {{ $page.props.auth.user.name }} </span>
                                 </span>
                             </template>
 
                             <template #content>
-                                <BreezeDropdownLink :href="route('logout')" method="post" as="button">
-                                    Log Out
-                                </BreezeDropdownLink>
+                                <div class="divide-y divide-gray-100 text-sm text-gray-900">
+                                    <div class="py-3 px-4">
+                                        <div>{{ $page.props.auth.user.name }}</div>
+                                        <div class="font-medium truncate">{{ $page.props.auth.user.email }}</div>
+                                    </div>
+                                    <BreezeDropdownLink :href="route('logout')" method="post" as="button">
+                                        Log Out
+                                    </BreezeDropdownLink>
+                                </div>
                             </template>
                         </BreezeDropdown>
                     </div>
