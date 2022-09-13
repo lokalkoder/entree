@@ -71,12 +71,12 @@ class EntreeRequests extends Middleware
                     ? Session::get('errors')->getBag('default')->getMessages()
                     : (object) [];
             },
-            'info' => function() {
+            'info' => function () {
                 return [
                     'name' => config('app.name'),
-                    'release' => now()->year
+                    'release' => now()->year,
                 ];
-            }
+            },
         ]);
     }
 }
