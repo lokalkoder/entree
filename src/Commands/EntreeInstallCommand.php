@@ -31,24 +31,54 @@ class EntreeInstallCommand extends InstallCommand
     {
         $this->call('breeze:install', ['stack' => 'vue']);
 
-        $this->installMiddlewareAfter('HandleInertiaRequests::class', '\App\Http\Middleware\EntreeRequests::class');
+        $this->implementMiddleware();
 
-        copy(__DIR__.'/../../stubs/app/Http/Middleware/EntreeRequests.php', app_path('Http/Middleware/EntreeRequests.php'));
+        $this->copyEntreePages();
 
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Entree'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages'));
-
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js/Entree', resource_path('js/Entree'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js/Pages', resource_path('js/Pages'));
-
-        $this->replaceInFile('Welcome', 'Entree', base_path('routes/web.php'));
-
-        $this->runCommands(['npm run build']);
+        $this->processNpm();
 
         $this->line('');
 
         $this->components->info('Entree scaffolding installed successfully.');
 
         return 1;
+    }
+
+    /**
+     * @return void
+     */
+    protected function processNpm(): void
+    {
+        $this->updateNodePackages(function ($packages) {
+            return [
+                    '@fortawesome/fontawesome-free' => '^6.2.0',
+                ] + $packages;
+        });
+
+        $this->runCommands(['npm run build']);
+    }
+
+    /**
+     * @return void
+     */
+    protected function copyEntreePages(): void
+    {
+        (new Filesystem)->ensureDirectoryExists(resource_path('js/Entree'));
+        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages'));
+
+        (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/js/Entree', resource_path('js/Entree'));
+        (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/js/Pages', resource_path('js/Pages'));
+
+        $this->replaceInFile('Welcome', 'Entree', base_path('routes/web.php'));
+    }
+
+    /**
+     * @return void
+     */
+    protected function implementMiddleware(): void
+    {
+        $this->installMiddlewareAfter('HandleInertiaRequests::class', '\App\Http\Middleware\EntreeRequests::class');
+
+        copy(__DIR__ . '/../../stubs/app/Http/Middleware/EntreeRequests.php', app_path('Http/Middleware/EntreeRequests.php'));
     }
 }
