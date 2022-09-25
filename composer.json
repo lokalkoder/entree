@@ -38,6 +38,9 @@
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
+        "files": [
+            "support/helpers.php"
+        ],
         "psr-4": {
             "Lokalkoder\\Entree\\": "src",
             "Lokalkoder\\Entree\\Database\\Factories\\": "database/factories"
