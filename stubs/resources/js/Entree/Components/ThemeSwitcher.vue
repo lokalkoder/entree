@@ -1,11 +1,7 @@
 <script setup>
-import {computed, reactive} from 'vue';
+import {computed, reactive, onMounted} from 'vue';
 
 let colorTheme = reactive({ dark: localStorage.getItem('color-theme') === 'dark' && window.matchMedia('(prefers-color-scheme: dark)').matches })
-
-if (colorTheme.dark) {
-    document.documentElement.classList.add('dark');
-}
 
 let colorThemeStorage = computed({
     // getter
@@ -21,11 +17,13 @@ let colorThemeStorage = computed({
 const themeDark = () => {
     if (colorThemeStorage) {
         if (colorThemeStorage === 'light') {
+            document.documentElement.classList.remove('light');
             document.documentElement.classList.add('dark');
             colorThemeStorage =  'dark';
             colorTheme.dark = true
         } else {
             document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
             colorThemeStorage = 'light';
             colorTheme.dark = false
         }
@@ -42,6 +40,15 @@ const themeDark = () => {
         }
     }
 }
+
+onMounted(() => {
+    if (colorTheme.dark) {
+        if (document.documentElement.classList.contains('light')) {
+            document.documentElement.classList.remove('light');
+        }
+        document.documentElement.classList.add('dark');
+    }
+})
 </script>
 <template>
     <div class="flex-initial mr-4">

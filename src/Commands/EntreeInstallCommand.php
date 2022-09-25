@@ -31,10 +31,40 @@ class EntreeInstallCommand extends InstallCommand
     {
         $this->call('breeze:install', ['stack' => 'vue']);
 
-        $this->installMiddlewareAfter('HandleInertiaRequests::class', '\App\Http\Middleware\EntreeRequests::class');
+        $this->implementMiddleware();
 
-        copy(__DIR__.'/../../stubs/app/Http/Middleware/EntreeRequests.php', app_path('Http/Middleware/EntreeRequests.php'));
+        $this->copyEntreePages();
 
+        $this->processNpm();
+
+        $this->line('');
+
+        $this->components->info('Entree scaffolding installed successfully.');
+
+        return 1;
+    }
+
+    /**
+     * @return void
+     */
+    protected function processNpm(): void
+    {
+        $this->updateNodePackages(function ($packages) {
+            return [
+                '@fortawesome/fontawesome-free' => '^6.2.0',
+                '@sweetalert2/themes' => '^5.0.12',
+                'sweetalert2' => '^11.4.33',
+            ] + $packages;
+        });
+
+        $this->runCommands(['npm run build']);
+    }
+
+    /**
+     * @return void
+     */
+    protected function copyEntreePages(): void
+    {
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Entree'));
         (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages'));
 
@@ -42,13 +72,15 @@ class EntreeInstallCommand extends InstallCommand
         (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js/Pages', resource_path('js/Pages'));
 
         $this->replaceInFile('Welcome', 'Entree', base_path('routes/web.php'));
+    }
 
-        $this->runCommands(['npm run build']);
+    /**
+     * @return void
+     */
+    protected function implementMiddleware(): void
+    {
+        $this->installMiddlewareAfter('HandleInertiaRequests::class', '\App\Http\Middleware\EntreeRequests::class');
 
-        $this->line('');
-
-        $this->components->info('Entree scaffolding installed successfully.');
-
-        return 1;
+        copy(__DIR__.'/../../stubs/app/Http/Middleware/EntreeRequests.php', app_path('Http/Middleware/EntreeRequests.php'));
     }
 }

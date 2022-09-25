@@ -17,10 +17,12 @@
     ],
     "require": {
         "php": "^8.1",
-        "spatie/laravel-package-tools": "^1.9.2",
         "illuminate/contracts": "^9.0",
+        "orchestra/memory": "master",
+        "owen-it/laravel-auditing": "^13.0",
+        "spatie/laravel-package-tools": "^1.9.2",
         "spatie/laravel-permission": "^5.5",
-        "orchestra/memory": "master"
+        "yadahan/laravel-authentication-log": "^1.5"
     },
     "require-dev": {
         "laravel/breeze": "^1.11",
@@ -36,6 +38,9 @@
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
+        "files": [
+            "support/helpers.php"
+        ],
         "psr-4": {
             "Lokalkoder\\Entree\\": "src",
             "Lokalkoder\\Entree\\Database\\Factories\\": "database/factories"
