@@ -1,4 +1,5 @@
 <?php
+
 if (! function_exists('initials')) {
     /**
      * Get Default Notification Drivers.
@@ -8,7 +9,7 @@ if (! function_exists('initials')) {
         $words = explode(' ', $name);
         if (count($words) >= 2) {
             return mb_strtoupper(
-                mb_substr($words[0], 0, 1, 'UTF-8') .
+                mb_substr($words[0], 0, 1, 'UTF-8').
                 mb_substr(end($words), 0, 1, 'UTF-8'),
                 'UTF-8');
         }
