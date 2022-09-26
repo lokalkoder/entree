@@ -5,11 +5,12 @@ namespace Lokalkoder\Entree\Services;
 class ShortCodeGenerator
 {
     protected string $description = '';
+
     protected int $maxChar = 5;
 
     /**
-     * @param string $description
-     * @param int $maxChar
+     * @param  string  $description
+     * @param  int  $maxChar
      */
     public function __construct(string $description, int $maxChar = 5)
     {
@@ -19,10 +20,11 @@ class ShortCodeGenerator
 
     /**
      * Generate reference code.
-     * @param string|null $code
+     *
+     * @param  string|null  $code
      * @return string
      */
-    public function generateReferenceCode(?string $code):string
+    public function generateReferenceCode(?string $code): string
     {
         $ref = $this->generateShortCode();
 
@@ -32,11 +34,12 @@ class ShortCodeGenerator
 
         $originalCode = $this->cleanString($code);
 
-        return (strlen($originalCode) < 5 && !empty($originalCode)) ? $originalCode : $ref;
+        return (strlen($originalCode) < 5 && ! empty($originalCode)) ? $originalCode : $ref;
     }
 
     /**
      * Generate short code.
+     *
      * @return string
      */
     public function generateShortCode(): string
@@ -48,11 +51,11 @@ class ShortCodeGenerator
         $max = count($array);
 
         if ($max > $this->maxChar) {
-            $med = floor($max/2);
+            $med = floor($max / 2);
 
-            $mid = floor($med/2);
+            $mid = floor($med / 2);
 
-            $code = trim(strtoupper($array[0].$array[$mid].$array[$med].$array[$med+$mid].$array[$max-1]));
+            $code = trim(strtoupper($array[0].$array[$mid].$array[$med].$array[$med + $mid].$array[$max - 1]));
         } else {
             $code = trim(strtoupper($string));
         }
@@ -62,11 +65,12 @@ class ShortCodeGenerator
 
     /**
      * Sanitize string.
-     * @param string $string
+     *
+     * @param  string  $string
      * @return string
      */
     protected function cleanString(string $string): string
     {
-        return strtoupper(preg_replace("/[^A-Za-z]/", '', $string));
+        return strtoupper(preg_replace('/[^A-Za-z]/', '', $string));
     }
 }
