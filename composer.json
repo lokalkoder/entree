@@ -22,6 +22,7 @@
         "owen-it/laravel-auditing": "^13.0",
         "spatie/laravel-package-tools": "^1.9.2",
         "spatie/laravel-permission": "^5.5",
+        "joesama/pintu": "3.x",
         "yadahan/laravel-authentication-log": "^1.5"
     },
     "require-dev": {
@@ -60,7 +61,11 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": false,
+            "pestphp/pest-plugin": false
+        }
     },
     "extra": {
         "laravel": {
