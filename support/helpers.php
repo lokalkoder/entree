@@ -11,7 +11,8 @@ if (! function_exists('initials')) {
             return mb_strtoupper(
                 mb_substr($words[0], 0, 1, 'UTF-8').
                 mb_substr(end($words), 0, 1, 'UTF-8'),
-                'UTF-8');
+                'UTF-8'
+            );
         }
 
         preg_match_all('#([A-Z]+)#', $name, $capitals);

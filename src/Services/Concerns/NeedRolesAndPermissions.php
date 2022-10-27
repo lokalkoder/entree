@@ -80,7 +80,7 @@ trait NeedRolesAndPermissions
      * @param  Request|null  $request
      * @return Authenticatable|mixed|null
      */
-    private static function authUser(Request $request = null)
+    private static function authUser(Request $request = null): mixed
     {
         return $request ? $request->user() : (Auth::check() ? Auth::user() : null);
     }

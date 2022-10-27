@@ -67,7 +67,8 @@ class CreateComponentPage extends GeneratorCommand
         return $this->laravel->resourcePath(
             'js/Pages/'.$this->qualifyClass($this->getControllerInput()).
             '/'.$this->qualifyClass($this->getMethodInput()).
-            '/'.$this->qualifyClass($name).'.vue');
+            '/'.$this->qualifyClass($name).'.vue'
+        );
     }
 
     /**

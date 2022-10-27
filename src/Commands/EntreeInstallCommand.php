@@ -4,6 +4,7 @@ namespace Lokalkoder\Entree\Commands;
 
 use Illuminate\Filesystem\Filesystem;
 use Laravel\Breeze\Console\InstallCommand;
+
 use function resource_path;
 
 class EntreeInstallCommand extends InstallCommand
@@ -65,11 +66,11 @@ class EntreeInstallCommand extends InstallCommand
      */
     protected function copyEntreePages(): void
     {
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Entree'));
-        (new Filesystem)->ensureDirectoryExists(resource_path('js/Pages'));
+        (new Filesystem())->ensureDirectoryExists(resource_path('js/Entree'));
+        (new Filesystem())->ensureDirectoryExists(resource_path('js/Pages'));
 
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js/Entree', resource_path('js/Entree'));
-        (new Filesystem)->copyDirectory(__DIR__.'/../../stubs/resources/js/Pages', resource_path('js/Pages'));
+        (new Filesystem())->copyDirectory(__DIR__.'/../../stubs/resources/js/Entree', resource_path('js/Entree'));
+        (new Filesystem())->copyDirectory(__DIR__.'/../../stubs/resources/js/Pages', resource_path('js/Pages'));
 
         $this->replaceInFile('Welcome', 'Entree', base_path('routes/web.php'));
     }

@@ -29,12 +29,12 @@ class ShortCodeGenerator
         $ref = $this->generateShortCode();
 
         if ($code === null) {
-            return $ref;
+            return strtoupper($ref);
         }
 
         $originalCode = $this->cleanString($code);
 
-        return (strlen($originalCode) < 5 && ! empty($originalCode)) ? $originalCode : $ref;
+        return (strlen($originalCode) < 5 && ! empty($originalCode)) ? $originalCode : strtoupper($ref);
     }
 
     /**
@@ -48,16 +48,16 @@ class ShortCodeGenerator
 
         $array = str_split($string);
 
-        $max = count($array);
+        $descriptionLength = count($array);
 
-        if ($max > $this->maxChar) {
-            $med = floor($max / 2);
+        if ($descriptionLength > $this->maxChar) {
+            $med = floor($descriptionLength / 2);
 
             $mid = floor($med / 2);
 
-            $code = trim(strtoupper($array[0].$array[$mid].$array[$med].$array[$med + $mid].$array[$max - 1]));
+            $code = trim($array[0].$array[$mid].$array[$med].$array[$med + $mid].$array[$descriptionLength - 1]);
         } else {
-            $code = trim(strtoupper($string));
+            $code = trim($string);
         }
 
         return $code;
@@ -71,6 +71,6 @@ class ShortCodeGenerator
      */
     protected function cleanString(string $string): string
     {
-        return strtoupper(preg_replace('/[^A-Za-z]/', '', $string));
+        return preg_replace('/[^A-Za-z]/', '', $string);
     }
 }
