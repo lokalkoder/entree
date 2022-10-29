@@ -4,11 +4,15 @@ import BreezeCheckbox from '@/Components/Checkbox.vue';
 import BreezeInput from '@/Components/Input.vue';
 import BreezeInputError from '@/Components/InputError.vue';
 import BreezeLabel from '@/Components/Label.vue';
-import { Link, useForm } from '@inertiajs/inertia-vue3';
+import { Head, Link, useForm } from '@inertiajs/inertia-vue3';
 
 defineProps({
     canResetPassword: Boolean,
     status: String,
+    classes: {
+        type: String,
+        default: 'text-green-900'
+    }
 });
 
 const form = useForm({
@@ -25,8 +29,8 @@ const submit = () => {
 </script>
 
 <template>
-    <div>
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+    <div :class="classes">
+        <div v-if="status" class="mb-4 font-medium text-sm">
             {{ status }}
         </div>
 
