@@ -45,15 +45,14 @@ class EntreeAdministrator extends Command
 
                 $user = User::updateOrCreate(
                     [
-                        'email' => $email
+                        'email' => $email,
                     ],
                     [
                         'name' => Str::title($name),
-                        'password' => Hash::make($password)
+                        'password' => Hash::make($password),
                     ]
                 );
             }
-
         }
 
         $userRoles = [];
@@ -65,7 +64,7 @@ class EntreeAdministrator extends Command
                 $user->is_admin = true;
                 $user->save();
 
-                $userRoles[] =  Role::isAdmin()->first()->id;
+                $userRoles[] = Role::isAdmin()->first()->id;
             } else {
                 foreach (explode(',', $roles) as $role) {
                     $role = Role::updateOrCreate(
