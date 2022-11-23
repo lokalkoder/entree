@@ -1,5 +1,5 @@
 <script setup>
-import DropZone from "@/Customs/Uploader/DropZone.vue";
+import DropZone from "@/Entree/Components/Uploader/DropZone.vue";
 import {inject, ref} from 'vue';
 import {usePage} from "@inertiajs/inertia-vue3";
 
@@ -41,11 +41,22 @@ const uploadFile = async file => {
     // track status and upload file
     file.status = 'loading'
 
-    let response = await fetch(props.url, {method: 'POST', body: formData})
-        .then(response => response.json())
+    let param = {
+        method: 'POST',
+        body: formData
+    };
+
+    let request = Object.assign(param, webhook.headerBearer())
+
+    let response = await fetch(
+        props.url,
+        request
+    ).then(response => response.json())
         .catch(error => {
             usePage().props.value.errors = error.response.data.errors
             usePage().props.value.messages.error = error.response.data.message
+
+            webhook.swalToaster()
         });
 
     // change status to indicate the success of the upload request

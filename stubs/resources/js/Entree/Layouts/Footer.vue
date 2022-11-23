@@ -1,17 +1,18 @@
 <script setup>
 import Logo from '@/Entree/Components/Logo.vue';
+import InlineLogo from "@/Customs/InlineLogo.vue";
 </script>
 <template>
-    <footer class="p-4 bg-gray-200 sm:p-6 dark:bg-gray-900">
+    <footer class="p-4 bg-green-200 sm:p-6 dark:bg-gray-900">
         <div class="mx-auto max-w-screen-xl">
             <div class="md:flex md:justify-between">
                 <div class="mb-6 md:mb-0">
                     <a href="/" class="flex items-center">
-                        <Logo class="block h-9 w-auto bg-white p-2 rounded-full"/>
-                        <span class="ml-4 self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                            {{ $page.props.info.name }}
-                        </span>
+                        <Logo class="block h-9 w-auto bg-white p-1 rounded"/>
                     </a>
+                </div>
+                <div>
+                    <inline-logo />
                 </div>
                 <div class="hidden grid grid-cols-1 gap-8 sm:gap-6">
                     <div>
@@ -27,7 +28,7 @@ import Logo from '@/Entree/Components/Logo.vue';
                     </div>
                 </div>
             </div>
-            <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+            <hr class="my-6 border-green-900 sm:mx-auto dark:border-gray-700 lg:my-8" />
             <div class="sm:flex sm:items-center sm:justify-between">
                 <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
                     ©{{ $page.props.info.release }}

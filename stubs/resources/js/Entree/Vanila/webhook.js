@@ -28,6 +28,10 @@ export default class Webhook {
      */
     can(permissionName, can) {
 
+        if (permissionName === undefined) {
+            return true;
+        }
+
         let permission = can !== undefined ? can +'.'+ permissionName : permissionName
 
         return usePage().props.value.auth.permissions.indexOf(permission) !== -1;

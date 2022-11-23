@@ -4,6 +4,7 @@ namespace Lokalkoder\Entree\Commands;
 
 use Illuminate\Filesystem\Filesystem;
 use Laravel\Breeze\Console\InstallCommand;
+
 use function resource_path;
 
 class EntreeInstallCommand extends InstallCommand
