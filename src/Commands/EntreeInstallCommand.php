@@ -57,11 +57,11 @@ class EntreeInstallCommand extends InstallCommand
             return [
                 '@fortawesome/fontawesome-free' => '^6.2.0',
                 '@sweetalert2/themes' => '^5.0.12',
-                'sweetalert2' => '^11.4.33',
+                'sweetalert2' => '^11.4.8',
             ] + $packages;
         });
 
-        $this->runCommands(['npm install', 'npm run build']);
+        $this->runCommands(['npm audit --fix', 'npm run build']);
     }
 
     /**
