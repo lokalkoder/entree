@@ -24,7 +24,7 @@ defineProps({
                         <div class="w-9/12 p-4 flex">
                             <Logo class="text-xl h-16 p-3 flex-initial bg-white shadow-xl rounded-xl "/>
                             <h1 class="text-5xl my-auto text-white font-bold flex-1 ml-4">
-                                Expert Dot MY
+                                {{ $page.props.info.name }}
                             </h1>
                         </div>
                     </div>
