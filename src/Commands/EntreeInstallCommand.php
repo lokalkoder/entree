@@ -43,7 +43,6 @@ class EntreeInstallCommand extends InstallCommand
 
         $this->processNpm();
 
-
         $this->components->info('Entree scaffolding installed successfully.');
 
         return 1;
