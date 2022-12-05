@@ -31,13 +31,18 @@ class EntreeInstallCommand extends InstallCommand
     {
         $this->call('breeze:install', ['stack' => 'vue']);
 
+        $this->line('Implementing Middleware');
+
         $this->implementMiddleware();
+
+        $this->line('Copying neccessary pages');
 
         $this->copyEntreePages();
 
+        $this->line('Proccessing NPM dependency');
+
         $this->processNpm();
 
-        $this->line('');
 
         $this->components->info('Entree scaffolding installed successfully.');
 
@@ -57,7 +62,7 @@ class EntreeInstallCommand extends InstallCommand
             ] + $packages;
         });
 
-        $this->runCommands(['npm run build']);
+        $this->runCommands(['npm install', 'npm run build']);
     }
 
     /**
