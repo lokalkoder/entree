@@ -457,6 +457,8 @@ export default class Webhook {
             messageText = usePage().props.value.messages.error
         }
 
+        let timerInterval
+
         Swal.fire({
             toast: true,
             position: 'bottom-right',
@@ -467,6 +469,15 @@ export default class Webhook {
             showConfirmButton: false,
             showCloseButton:true,
             timerProgressBar:true,
+            timer:2000,
+            didOpen: toast => {
+                timerInterval = setInterval(() => Swal.getTimerLeft(), 100)
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
         });
     }
 }

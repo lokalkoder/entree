@@ -37,13 +37,13 @@ const submit = () => {
         <form @submit.prevent="submit">
             <div>
                 <BreezeLabel for="email" value="Email" />
-                <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus autocomplete="username" />
+                <BreezeInput id="email" type="email" class="mt-1 block w-full rounded-none" v-model="form.email" required autofocus autocomplete="username" />
                 <BreezeInputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
                 <BreezeLabel for="password" value="Password" />
-                <BreezeInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="current-password" />
+                <BreezeInput id="password" type="password" class="mt-1 block w-full rounded-none" v-model="form.password" required autocomplete="current-password" />
                 <BreezeInputError class="mt-2" :message="form.errors.password" />
             </div>
 
@@ -59,7 +59,7 @@ const submit = () => {
                     Forgot your password?
                 </Link>
 
-                <BreezeButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <BreezeButton class="ml-4 rounded-none" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
                 </BreezeButton>
             </div>
