@@ -1,20 +1,29 @@
 <script setup>
 import DropZone from "@/Entree/Components/Uploader/DropZone.vue";
-import {inject, ref} from 'vue';
-import {usePage} from "@inertiajs/inertia-vue3";
+import {inject, onMounted, onUpdated, reactive, ref, watch, watchEffect} from 'vue';
+import {useForm, usePage} from "@inertiajs/inertia-vue3";
 
 const webhook = inject('$webhook')
 
 const props = defineProps({
+    id: {
+        type: Number,
+        default: (new Date()).getTime(),
+    },
     url: {
         type: String,
         default: null,
+    },
+    form: {
+        type: [Array, Object],
+        default: [],
     },
 });
 
 const emit = defineEmits(['fileUploaded'])
 
 const files = ref([])
+const fileUploader = ref({ form: props.form})
 
 const addFiles = newFiles => {
     let newUploadableFiles = [...newFiles].map(file => new UploadableFile(file)).filter(file => !fileExists(file.id))
@@ -30,6 +39,8 @@ const onInputChange = async e => {
     let response = await uploadFiles(files.value)
 
     emit('fileUploaded', response)
+
+    files.value = []
 }
 
 const uploadFile = async file => {
@@ -38,7 +49,10 @@ const uploadFile = async file => {
     let formData = new FormData()
     formData.append('file', file.file)
 
-    // track status and upload file
+    for ( const item in props.form) {
+        formData.append(item, props.form[item])
+    }
+
     file.status = 'loading'
 
     let param = {
@@ -51,17 +65,20 @@ const uploadFile = async file => {
     let response = await fetch(
         props.url,
         request
-    ).then(response => response.json())
-        .catch(error => {
+    ).then(response => {
+        const data = response.json()
+        file.status = data.ok
+        return data
+    }).catch(error => {
+        if (Object.keys(error).length > 0) {
             usePage().props.value.errors = error.response.data.errors
             usePage().props.value.messages.error = error.response.data.message
 
             webhook.swalToaster()
-        });
+        }
+    });
 
     // change status to indicate the success of the upload request
-    file.status = response.ok
-
     return response
 }
 
@@ -76,13 +93,17 @@ class UploadableFile {
         this.status = null
     }
 }
+
+defineExpose({ fileUploader })
+
 </script>
 <template>
     <div class="w-full">
         <DropZone class="w-fit drop-area" @files-dropped="addFiles" #default="{ dropZoneActive }">
-            <label class="cursor-pointer">
+            <label :for="'file-input' + props.id" class="cursor-pointer">
+                <input type="file" :id="'file-input' + props.id" class="hidden opacity-0 appearance-none" @click="onInputClick"  @change="onInputChange">
                 <slot>
-                    <div class="group w-full py-6 px-4 text-center bg-gray-50  border-gray-100 border-2 border-dotted text-center">
+                    <div class="group w-64 py-6 px-4 text-center bg-gray-50  border-gray-100 border-2 border-dotted text-center">
                         <div class="group-hover:hidden" v-if="dropZoneActive">
                             <div class="text-sm">Drop Them Here</div>
                             <span class="smaller">to add them</span>
@@ -103,7 +124,6 @@ class UploadableFile {
                         </div>
                     </div>
                 </slot>
-                <input type="file" id="file-input" class="hidden opacity-0 appearance-none"  @change="onInputChange" />
             </label>
         </DropZone>
     </div>
