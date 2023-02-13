@@ -59,11 +59,11 @@ watchEffect(() => {
 
         <div class="mt-2 text-gray-500 dark:text-gray-300 group-hover:text-gray-900 text-center">
             <div class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
-               {{ detail.all_roles.toUpperCase() }}
+               {{ detail.all_roles ? detail.all_roles.toUpperCase() : '-' }}
             </div>
             <span class="text-xs font-semibold">@</span>
             <div class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">
-                {{ detail.all_org.toUpperCase() }}
+                {{ detail.all_org ? detail.all_org.toUpperCase() : '-' }}
             </div>
         </div>
 

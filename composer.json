@@ -23,10 +23,10 @@
         "spatie/laravel-package-tools": "^1.9.2",
         "spatie/laravel-permission": "^5.5",
         "joesama/pintu": "3.x",
-        "yadahan/laravel-authentication-log": "^1.5"
+        "yadahan/laravel-authentication-log": "^1.5",
+        "laravel/breeze": "1.12.*"
     },
     "require-dev": {
-        "laravel/breeze": "^1.11",
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^6.0",
         "nunomaduro/larastan": "^2.0.1",

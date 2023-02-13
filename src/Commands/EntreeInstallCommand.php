@@ -31,13 +31,17 @@ class EntreeInstallCommand extends InstallCommand
     {
         $this->call('breeze:install', ['stack' => 'vue']);
 
+        $this->line('Implementing Middleware');
+
         $this->implementMiddleware();
+
+        $this->line('Copying neccessary pages');
 
         $this->copyEntreePages();
 
-        $this->processNpm();
+        $this->line('Proccessing NPM dependency');
 
-        $this->line('');
+        $this->processNpm();
 
         $this->components->info('Entree scaffolding installed successfully.');
 
@@ -53,11 +57,11 @@ class EntreeInstallCommand extends InstallCommand
             return [
                 '@fortawesome/fontawesome-free' => '^6.2.0',
                 '@sweetalert2/themes' => '^5.0.12',
-                'sweetalert2' => '^11.4.33',
+                'sweetalert2' => '^11.4.8',
             ] + $packages;
         });
 
-        $this->runCommands(['npm run build']);
+        $this->runCommands(['npm audit --fix', 'npm run build']);
     }
 
     /**

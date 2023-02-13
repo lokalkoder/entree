@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Carbon\Carbon;
+use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
@@ -76,6 +77,9 @@ class EntreeRequests extends Middleware
                     'name' => config('app.name'),
                     'release' => now()->year,
                 ];
+            },
+            'inspiration' => function () {
+                return Inspiring::quote();
             },
         ]);
     }

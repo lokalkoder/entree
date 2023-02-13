@@ -1,5 +1,5 @@
 <script setup>
-import Logo from '/public/images/logo.svg?url';
+import Logo from '/public/vendor/entree/images/logo.png';
 
 const props = defineProps(['classes']);
 </script>

@@ -3,6 +3,7 @@
 namespace Lokalkoder\Entree;
 
 use Lokalkoder\Entree\Commands\CreateComponentPage;
+use Lokalkoder\Entree\Commands\EntreeAdministrator;
 use Lokalkoder\Entree\Commands\EntreeInstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -18,8 +19,10 @@ class EntreeServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('entree')
+            ->hasAssets()
             ->hasCommands([
                 EntreeInstallCommand::class,
+                EntreeAdministrator::class,
                 CreateComponentPage::class,
             ]);
     }

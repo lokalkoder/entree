@@ -1,3 +1,6 @@
+<script setup>
+import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+</script>
 <template>
     <div class="pt-4 pb-1 border-t border-gray-200">
         <div class="px-4">

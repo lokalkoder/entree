@@ -28,6 +28,10 @@ export default class Webhook {
      */
     can(permissionName, can) {
 
+        if (permissionName === undefined) {
+            return true;
+        }
+
         let permission = can !== undefined ? can +'.'+ permissionName : permissionName
 
         return usePage().props.value.auth.permissions.indexOf(permission) !== -1;
@@ -453,6 +457,8 @@ export default class Webhook {
             messageText = usePage().props.value.messages.error
         }
 
+        let timerInterval
+
         Swal.fire({
             toast: true,
             position: 'bottom-right',
@@ -463,6 +469,15 @@ export default class Webhook {
             showConfirmButton: false,
             showCloseButton:true,
             timerProgressBar:true,
+            timer:2000,
+            didOpen: toast => {
+                timerInterval = setInterval(() => Swal.getTimerLeft(), 100)
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
         });
     }
 }
