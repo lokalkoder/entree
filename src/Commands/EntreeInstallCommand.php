@@ -29,19 +29,29 @@ class EntreeInstallCommand extends InstallCommand
      */
     public function handle()
     {
-        $this->call('breeze:install', ['stack' => 'vue']);
-
         $this->line('Implementing Middleware');
 
         $this->implementMiddleware();
 
-        $this->line('Copying neccessary pages');
+        $this->line('Copying Entree pages');
 
         $this->copyEntreePages();
+
+        $this->line('Proccessing Vendor dependency');
+
+        $this->call('vendor:publish', ['--provider' => 'OwenIt\Auditing\AuditingServiceProvider']);
+
+        $this->call('vendor:publish', ['--provider' => 'Lokalkoder\Entree\EntreeServiceProvider']);
+
+        $this->call('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider']);
+
+        $this->call('vendor:publish', ['--provider' => 'Yadahan\AuthenticationLog\AuthenticationLogServiceProvider']);
 
         $this->line('Proccessing NPM dependency');
 
         $this->processNpm();
+
+        $this->call('breeze:install', ['stack' => 'vue']);
 
         $this->components->info('Entree scaffolding installed successfully.');
 
@@ -60,8 +70,14 @@ class EntreeInstallCommand extends InstallCommand
                 'sweetalert2' => '^11.4.8',
             ] + $packages;
         });
+    }
 
-        $this->runCommands(['npm install', 'npm run build']);
+    /**
+     * @return void
+     */
+    protected function runNpm(): void
+    {
+        $this->runCommands(['npm install']);
     }
 
     /**
