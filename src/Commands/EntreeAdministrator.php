@@ -3,7 +3,6 @@
 namespace Lokalkoder\Entree\Commands;
 
 use App\Models\Settings\Role;
-use App\Models\Settings\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -34,7 +33,7 @@ class EntreeAdministrator extends Command
         $roles = $this->option('role');
         $email = $this->argument('email');
 
-        $user = User::where('email', $email)->first();
+        $user = $this->userModel()->where('email', $email)->first();
 
         if ($user === null) {
             $this->info('User not exist');
@@ -43,7 +42,7 @@ class EntreeAdministrator extends Command
                 $name = $this->ask('What is your name?');
                 $password = $this->secret('What is the password?');
 
-                $user = User::updateOrCreate(
+                $user = $this->userModel()->updateOrCreate(
                     [
                         'email' => $email,
                     ],
@@ -64,10 +63,10 @@ class EntreeAdministrator extends Command
                 $user->is_admin = true;
                 $user->save();
 
-                $userRoles[] = Role::isAdmin()->first()->id;
+                $userRoles[] = $this->roleModel()->isAdmin()->first()->id;
             } else {
                 foreach (explode(',', $roles) as $role) {
-                    $role = Role::updateOrCreate(
+                    $role = $this->roleModel()->updateOrCreate(
                         ['name' => $role],
                         ['description' => Str::title($role)]
                     );
@@ -79,5 +78,15 @@ class EntreeAdministrator extends Command
             $this->info('Attach user roles');
             $user->roles()->syncWithoutDetaching($userRoles);
         }
+    }
+
+    protected function userModel()
+    {
+        return app(config('entree.user.model'));
+    }
+
+    protected function roleModel()
+    {
+        return app(config('entree.user.role'));
     }
 }

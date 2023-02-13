@@ -11,4 +11,9 @@ return [
     */
 
     'enable_permission' => env('ENTREE_PERMISSION', false),
+
+    'user' => [
+        'model' => env('ENTREE_USER_MODEL', 'App\Models\User'),
+        'role' => env('ENTREE_USER_ROLE', 'App\Models\Roles'),
+    ]
 ];
