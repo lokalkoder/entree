@@ -29,6 +29,10 @@ class EntreeInstallCommand extends InstallCommand
      */
     public function handle()
     {
+        $this->line('Installing Laravel Breeze');
+
+        $this->call('breeze:install', ['stack' => 'vue']);
+
         $this->line('Implementing Middleware');
 
         $this->implementMiddleware();
@@ -51,7 +55,7 @@ class EntreeInstallCommand extends InstallCommand
 
         $this->processNpm();
 
-        $this->call('breeze:install', ['stack' => 'vue']);
+        $this->runNpm();
 
         $this->components->info('Entree scaffolding installed successfully.');
 
