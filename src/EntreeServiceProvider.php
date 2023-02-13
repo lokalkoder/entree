@@ -20,6 +20,7 @@ class EntreeServiceProvider extends PackageServiceProvider
         $package
             ->name('entree')
             ->hasConfigFile(['entree', 'setup'])
+            ->hasMigrations(['update_user_uuid'])
             ->hasAssets()
             ->hasCommands([
                 EntreeInstallCommand::class,
