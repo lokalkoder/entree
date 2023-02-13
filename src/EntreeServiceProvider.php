@@ -4,6 +4,7 @@ namespace Lokalkoder\Entree;
 
 use Lokalkoder\Entree\Commands\CreateComponentPage;
 use Lokalkoder\Entree\Commands\EntreeAdministrator;
+use Lokalkoder\Entree\Commands\EntreeGivePermission;
 use Lokalkoder\Entree\Commands\EntreeInstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -26,6 +27,7 @@ class EntreeServiceProvider extends PackageServiceProvider
                 EntreeInstallCommand::class,
                 EntreeAdministrator::class,
                 CreateComponentPage::class,
+                EntreeGivePermission::class,
             ]);
     }
 }

@@ -61,7 +61,7 @@ class EntreeInstallCommand extends InstallCommand
             ] + $packages;
         });
 
-        $this->runCommands(['npm audit --fix', 'npm run build']);
+        $this->runCommands(['npm install', 'npm run build']);
     }
 
     /**

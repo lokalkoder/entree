@@ -2,13 +2,15 @@
 
 namespace Lokalkoder\Entree\Commands;
 
-use App\Models\Settings\Role;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Lokalkoder\Entree\Commands\Concerns\UseEntreeModel;
 
 class EntreeAdministrator extends Command
 {
+    use UseEntreeModel;
+
     /**
      * The name and signature of the console command.
      *
@@ -78,15 +80,5 @@ class EntreeAdministrator extends Command
             $this->info('Attach user roles');
             $user->roles()->syncWithoutDetaching($userRoles);
         }
-    }
-
-    protected function userModel()
-    {
-        return app(config('entree.user.model'));
-    }
-
-    protected function roleModel()
-    {
-        return app(config('entree.user.role'));
     }
 }

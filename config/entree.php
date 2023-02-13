@@ -15,5 +15,6 @@ return [
     'user' => [
         'model' => env('ENTREE_USER_MODEL', 'App\Models\User'),
         'role' => env('ENTREE_USER_ROLE', 'App\Models\Roles'),
+        'permission' => env('ENTREE_USER_PERMISSION', 'Spatie\Permission\Models\Permission'),
     ]
 ];
